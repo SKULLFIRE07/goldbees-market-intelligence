@@ -23,10 +23,10 @@ const STRATEGY_SUGGESTIONS = [
 
 const priorityBar = (p: Priority) => {
   const map: Record<Priority, string> = {
-    Critical: "bg-black text-white",
-    High: "bg-black text-white",
-    Medium: "bg-white text-black",
-    Low: "bg-white text-black",
+    Critical: "bg-ink text-paper",
+    High: "bg-ink text-paper",
+    Medium: "bg-paper text-ink",
+    Low: "bg-paper text-ink",
   };
   return map[p];
 };
@@ -73,37 +73,50 @@ export default function Page() {
         subtitle="Ranked by priority. Confidence reflects how strongly the underlying data supports the recommendation."
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {recs.map((r) => (
-            <div key={r.id} className="border border-black flex flex-col">
-              <div className="border-b border-black px-3 py-2 flex items-center justify-between">
-                <div className="text-[10px] uppercase tracking-widest">{r.kind}</div>
-                <div className={"text-[10px] uppercase tracking-widest px-2 py-0.5 border border-black " + priorityBar(r.priority)}>
+          {recs.map((r, i) => (
+            <div key={r.id} className="surface surface-hover flex flex-col">
+              <div className="border-b border-ink px-4 py-2.5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="num text-ink/40 text-xs">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="eyebrow text-ink/55">{r.kind}</span>
+                </div>
+                <div className={"text-[10px] uppercase tracking-widest px-2.5 py-1 border border-ink " + priorityBar(r.priority)}>
                   {r.priority}
                 </div>
               </div>
-              <div className="p-4 flex-1 flex flex-col gap-3 text-sm">
-                <div className="font-semibold text-base leading-snug">{r.title}</div>
+              <div className="p-5 flex-1 flex flex-col gap-4 text-sm">
+                <div className="font-display font-semibold text-lg leading-snug">{r.title}</div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-widest mb-1">Action</div>
-                  <p>{r.action}</p>
+                  <div className="eyebrow text-ink/45 mb-1.5">Action</div>
+                  <p className="text-ink/85 leading-relaxed">{r.action}</p>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-widest mb-1">Why The Data Supports It</div>
-                  <ul className="list-disc pl-5">
-                    {r.reasoning.map((line, i) => <li key={i}>{line}</li>)}
+                  <div className="eyebrow text-ink/45 mb-1.5">Why The Data Supports It</div>
+                  <ul className="space-y-1.5">
+                    {r.reasoning.map((line, j) => (
+                      <li key={j} className="flex gap-2.5 text-ink/85">
+                        <span className="mt-1.5 h-1 w-1 rounded-full bg-ink shrink-0" />
+                        <span className="leading-relaxed">{line}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-widest mb-1">Expected Outcome</div>
-                  <p>{r.expectedOutcome}</p>
+                  <div className="eyebrow text-ink/45 mb-1.5">Expected Outcome</div>
+                  <p className="text-ink/85 leading-relaxed">{r.expectedOutcome}</p>
                 </div>
-                <div className="border-t border-black pt-3 mt-auto">
-                  <div className="text-[10px] uppercase tracking-widest mb-1">Why This Is Useful</div>
-                  <p className="text-xs leading-relaxed">{r.whyUseful}</p>
+                <div className="border-t border-ink/15 pt-3 mt-auto">
+                  <div className="eyebrow text-ink/45 mb-1.5">Why This Is Useful</div>
+                  <p className="text-xs text-ink/70 leading-relaxed">{r.whyUseful}</p>
                 </div>
-                <div className="text-[10px] uppercase tracking-widest border-t border-black pt-2 flex justify-between">
-                  <span>Confidence</span>
-                  <span className="font-mono">{r.confidence}%</span>
+                <div className="border-t border-ink/15 pt-3">
+                  <div className="flex items-center justify-between eyebrow text-ink/55 mb-2">
+                    <span>Confidence</span>
+                    <span className="num text-ink">{r.confidence}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-ink/10">
+                    <div className="h-1.5 bg-ink" style={{ width: `${r.confidence}%` }} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,7 +237,7 @@ export default function Page() {
         subtitle="A transparent view of the inputs, scoring and outputs the engine uses."
       >
         <div className="grid md:grid-cols-3 gap-6 text-sm leading-relaxed">
-          <div className="border border-black p-4">
+          <div className="surface surface-hover p-5">
             <div className="text-[10px] uppercase tracking-widest mb-2">Inputs</div>
             <ul className="list-disc pl-5">
               <li>Product catalog with landed cost</li>
@@ -234,7 +247,7 @@ export default function Page() {
               <li>City tier weighting</li>
             </ul>
           </div>
-          <div className="border border-black p-4">
+          <div className="surface surface-hover p-5">
             <div className="text-[10px] uppercase tracking-widest mb-2">Scoring Math</div>
             <ul className="list-disc pl-5">
               <li>Launch score = demand x tier weight</li>
@@ -244,7 +257,7 @@ export default function Page() {
               <li>Confidence = supporting signal density</li>
             </ul>
           </div>
-          <div className="border border-black p-4">
+          <div className="surface surface-hover p-5">
             <div className="text-[10px] uppercase tracking-widest mb-2">Outputs</div>
             <ul className="list-disc pl-5">
               <li>Ranked recommendations with reasoning</li>

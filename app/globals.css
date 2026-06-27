@@ -4,25 +4,120 @@
 
 :root {
   color-scheme: light;
+  --ink: #0a0a0a;
+  --paper: #f7f6f3;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html, body {
-  background: #ffffff;
-  color: #000000;
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-:focus-visible {
-  outline: 2px solid #000000;
-  outline-offset: 2px;
-}
-
+/* Hairline borders everywhere default to ink. */
 * {
-  border-color: #000000;
+  border-color: var(--ink);
 }
 
 ::selection {
-  background: #000000;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Fine paper grain + faint grid — gives the flat monochrome real depth. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(10, 10, 10, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 120% 80% at 50% 0%, #000 35%, transparent 85%);
+}
+
+/* Minimal monochrome scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--ink); border: 2px solid var(--paper); }
+
+@layer components {
+  /* Eyebrow / kicker label */
+  .eyebrow {
+    @apply text-[10px] uppercase tracking-widest font-medium;
+  }
+
+  /* Tabular figures for all numeric data */
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Tactile inverted button */
+  .btn-ink {
+    @apply inline-flex items-center gap-2 border border-ink bg-ink text-paper
+           px-4 py-2 text-[11px] uppercase tracking-widest font-medium
+           transition-all duration-200;
+  }
+  .btn-ink:hover {
+    @apply bg-paper text-ink shadow-hard-sm -translate-y-0.5;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-ink bg-paper text-ink
+           px-4 py-2 text-[11px] uppercase tracking-widest font-medium
+           transition-all duration-200;
+  }
+  .btn-ghost:hover {
+    @apply bg-ink text-paper -translate-y-0.5;
+  }
+
+  /* Card surface */
+  .surface {
+    @apply border border-ink bg-paper transition-all duration-200;
+  }
+  .surface-hover:hover {
+    @apply -translate-y-1 shadow-hard;
+  }
+}
+
+/* Polished data tables across every page */
+.surface table { font-variant-numeric: tabular-nums; }
+.surface thead tr { background: var(--smoke); }
+.surface thead th { padding-left: 0.5rem; padding-right: 0.5rem; white-space: nowrap; }
+.surface thead th:first-child { padding-left: 0.75rem; }
+.surface table tbody tr {
+  transition: background-color 0.15s ease;
+}
+.surface table tbody tr:not(.bg-black):not(.bg-ink):hover {
+  background-color: rgba(10, 10, 10, 0.045);
+}
+.surface select,
+.surface input[type="text"] {
+  transition: box-shadow 0.15s ease;
+}
+.surface input[type="range"] {
+  accent-color: #0a0a0a;
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

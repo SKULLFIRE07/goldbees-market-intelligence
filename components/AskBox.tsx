@@ -21,13 +21,13 @@ const DEFAULT_SUGGESTED = [
 
 function AnswerCard({ r }: { r: AskResult }) {
   return (
-    <div className="border border-black mb-6">
-      <div className="border-b border-black px-4 py-3">
-        <div className="text-[10px] uppercase tracking-widest">Intent: {r.intent}</div>
-        <div className="font-semibold text-sm mt-1">Q: {r.question}</div>
+    <div className="surface mb-6 animate-fade-up shadow-hard-sm">
+      <div className="border-b border-ink px-5 py-4 bg-ink text-paper">
+        <div className="eyebrow text-paper/55">Intent · {r.intent}</div>
+        <div className="font-display font-semibold text-base mt-1.5">{r.question}</div>
       </div>
-      <div className="p-4">
-        <div className="text-base font-semibold mb-3">{r.answer}</div>
+      <div className="p-5">
+        <div className="text-base sm:text-lg font-medium mb-4 leading-snug">{r.answer}</div>
 
         {r.bullets && (
           <ul className="list-disc pl-5 text-sm mb-4">
@@ -38,10 +38,10 @@ function AnswerCard({ r }: { r: AskResult }) {
         )}
 
         {r.table && (
-          <div className="overflow-x-auto mb-4">
+          <div className="overflow-x-auto mb-4 border border-ink/15">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b-2 border-black">
+                <tr className="border-b-2 border-black bg-smoke">
                   {r.table.headers.map((h) => (
                     <th key={h} className="text-left py-2 pr-3 uppercase tracking-widest text-[10px]">
                       {h}
@@ -51,9 +51,9 @@ function AnswerCard({ r }: { r: AskResult }) {
               </thead>
               <tbody>
                 {r.table.rows.map((row, i) => (
-                  <tr key={i} className="border-b border-black">
+                  <tr key={i} className="border-b border-ink/15">
                     {row.map((c, j) => (
-                      <td key={j} className="py-2 pr-3 font-mono text-sm">
+                      <td key={j} className="py-2 px-3 num text-sm">
                         {String(c)}
                       </td>
                     ))}
@@ -108,30 +108,30 @@ export default function AskBox({
             e.preventDefault();
             submit(q);
           }}
-          className="flex gap-0"
+          className="flex gap-0 group"
         >
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="e.g. Which state has the highest demand for Face Serum?"
-            className="flex-1 border border-black border-r-0 px-4 py-3 bg-white text-black text-sm focus:outline-none"
+            className="flex-1 min-w-0 border border-ink border-r-0 px-4 py-3.5 bg-paper text-ink text-sm focus:outline-none focus:bg-smoke"
           />
           <button
             type="submit"
-            className="border border-black bg-black text-white px-6 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-black"
+            className="border border-ink bg-ink text-paper px-6 py-3.5 text-xs uppercase tracking-widest font-medium hover:bg-paper hover:text-ink transition-colors"
           >
-            Ask
+            Ask →
           </button>
         </form>
 
-        <div className="mt-5">
-          <div className="text-[10px] uppercase tracking-widest mb-2">Suggested Questions</div>
+        <div className="mt-6">
+          <div className="eyebrow text-ink/50 mb-3">Suggested Questions</div>
           <div className="flex flex-wrap gap-2">
             {suggestions.map((s) => (
               <button
                 key={s}
                 onClick={() => submit(s)}
-                className="text-xs border border-black px-3 py-1 bg-white text-black hover:bg-black hover:text-white"
+                className="text-xs border border-ink px-3 py-1.5 bg-paper text-ink hover:bg-ink hover:text-paper hover:-translate-y-0.5 transition-all duration-200"
               >
                 {s}
               </button>

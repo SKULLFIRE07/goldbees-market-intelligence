@@ -19,25 +19,30 @@ export default function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="md:hidden border-b border-black sticky top-0 z-20 bg-white">
+    <div className="md:hidden border-b border-ink sticky top-0 z-20 bg-paper/90 backdrop-blur-md">
       <div className="flex items-center justify-between px-4 py-3">
-        <Link href="/" onClick={() => setOpen(false)} className="flex flex-col">
-          <span className="text-xl font-bold tracking-tight leading-none">GOLDBEES</span>
-          <span className="text-[10px] uppercase tracking-widest">Market Intelligence</span>
+        <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-2.5">
+          <span className="grid h-8 w-8 place-items-center bg-ink text-paper font-display text-lg font-bold leading-none">
+            G
+          </span>
+          <span className="flex flex-col">
+            <span className="font-display text-lg font-bold tracking-tight leading-none">GOLDBEES</span>
+            <span className="eyebrow text-ink/55">Market Intelligence</span>
+          </span>
         </Link>
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle navigation"
           aria-expanded={open}
-          className="border border-black px-3 py-2 text-xs uppercase tracking-widest bg-black text-white"
+          className="btn-ink"
         >
           {open ? "Close" : "Menu"}
         </button>
       </div>
 
       {open && (
-        <nav className="flex flex-col border-t border-black">
-          {nav.map((n) => {
+        <nav className="flex flex-col border-t border-ink animate-fade-in">
+          {nav.map((n, i) => {
             const active = n.href === "/" ? path === "/" : path.startsWith(n.href);
             return (
               <Link
@@ -45,10 +50,13 @@ export default function MobileNav() {
                 href={n.href}
                 onClick={() => setOpen(false)}
                 className={
-                  "px-4 py-3 text-sm border-b border-black " +
-                  (active ? "bg-black text-white" : "bg-white text-black")
+                  "flex items-center gap-3 px-4 py-3.5 text-sm border-b border-ink/15 " +
+                  (active ? "bg-ink text-paper font-medium" : "bg-paper text-ink")
                 }
               >
+                <span className={"num text-[10px] " + (active ? "text-paper/50" : "text-ink/40")}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 {n.label}
               </Link>
             );

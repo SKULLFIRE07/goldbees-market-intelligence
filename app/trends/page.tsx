@@ -4,8 +4,11 @@ import { trends } from "@/lib/data/trends";
 function Bar({ value }: { value: number }) {
   const w = Math.max(0, Math.min(100, value));
   return (
-    <div className="w-24 h-2 border border-black bg-white">
-      <div className="h-full bg-black" style={{ width: `${w}%` }} />
+    <div className="flex items-center gap-2">
+      <div className="w-20 h-2 border border-ink bg-paper">
+        <div className="h-full bg-ink" style={{ width: `${w}%` }} />
+      </div>
+      <span className="num text-[11px] text-ink/60 w-6">{value}</span>
     </div>
   );
 }

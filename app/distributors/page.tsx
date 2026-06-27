@@ -27,13 +27,13 @@ export default function Page() {
         title="Distributor Targeting"
         subtitle="Ranked recommendations from IndiaMART, JustDial, Amazon/Flipkart seller signals and Quick Commerce partners."
       >
-        <div className="flex flex-wrap gap-3 mb-4 text-xs">
-          <label className="flex flex-col gap-1">
-            <span className="uppercase tracking-widest text-[10px]">State</span>
+        <div className="flex flex-wrap items-end gap-4 mb-5 p-4 bg-smoke border border-ink/15">
+          <label className="flex flex-col gap-1.5">
+            <span className="eyebrow text-ink/55">State</span>
             <select
               value={stateFilter}
               onChange={(e) => setStateFilter(e.target.value)}
-              className="border border-black px-2 py-1 bg-white text-black"
+              className="border border-ink px-3 py-2 bg-paper text-ink text-sm min-w-[10rem]"
             >
               {stateOptions.map((s) => (
                 <option key={s.code} value={s.code}>{s.name}</option>
@@ -41,12 +41,12 @@ export default function Page() {
             </select>
           </label>
 
-          <label className="flex flex-col gap-1">
-            <span className="uppercase tracking-widest text-[10px]">Category</span>
+          <label className="flex flex-col gap-1.5">
+            <span className="eyebrow text-ink/55">Category</span>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="border border-black px-2 py-1 bg-white text-black"
+              className="border border-ink px-3 py-2 bg-paper text-ink text-sm min-w-[10rem]"
             >
               <option value="all">All Categories</option>
               {categories.map((c) => (
@@ -55,16 +55,22 @@ export default function Page() {
             </select>
           </label>
 
-          <label className="flex flex-col gap-1">
-            <span className="uppercase tracking-widest text-[10px]">Min Fit Score: {minScore}</span>
+          <label className="flex flex-col gap-1.5 min-w-[12rem]">
+            <span className="eyebrow text-ink/55">Min Fit Score · <span className="num text-ink">{minScore}</span></span>
             <input
               type="range"
               min={0}
               max={100}
               value={minScore}
               onChange={(e) => setMinScore(Number(e.target.value))}
+              className="mt-2"
             />
           </label>
+
+          <div className="ml-auto flex flex-col gap-1.5">
+            <span className="eyebrow text-ink/55">Matches</span>
+            <span className="num font-display text-2xl font-semibold leading-none">{filtered.length}</span>
+          </div>
         </div>
 
         <div className="overflow-x-auto">

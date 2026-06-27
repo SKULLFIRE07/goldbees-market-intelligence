@@ -1,24 +1,29 @@
 export default function Section({
   title,
   subtitle,
+  eyebrow,
   right,
   children,
 }: {
   title: string;
   subtitle?: string;
+  eyebrow?: string;
   right?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <section className="border border-black mb-6">
-      <div className="flex items-center justify-between border-b border-black px-4 py-3">
+    <section className="surface mb-6 animate-fade-up">
+      <div className="flex items-start justify-between gap-4 border-b border-ink px-5 py-4">
         <div>
-          <h2 className="text-sm uppercase tracking-widest font-semibold">{title}</h2>
-          {subtitle && <p className="text-xs mt-1">{subtitle}</p>}
+          {eyebrow && <div className="eyebrow text-ink/45 mb-1.5">{eyebrow}</div>}
+          <h2 className="font-display text-base sm:text-lg font-semibold tracking-tight leading-tight">
+            {title}
+          </h2>
+          {subtitle && <p className="text-xs sm:text-[13px] text-ink/65 mt-1.5 max-w-3xl leading-relaxed">{subtitle}</p>}
         </div>
-        {right}
+        {right && <div className="shrink-0">{right}</div>}
       </div>
-      <div className="p-4">{children}</div>
+      <div className="p-5">{children}</div>
     </section>
   );
 }

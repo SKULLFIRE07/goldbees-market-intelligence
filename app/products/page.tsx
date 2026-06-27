@@ -64,7 +64,7 @@ export default function Page() {
         subtitle="Reference economics from client notes"
       >
         <div className="grid md:grid-cols-2 gap-6 text-sm leading-relaxed">
-          <div className="border border-black p-4">
+          <div className="surface surface-hover p-5">
             <div className="text-[10px] uppercase tracking-widest mb-2">Standard Cold Process - 1 kg batch</div>
             <ul className="list-disc pl-5">
               <li>Batch cost: ₹1,500 → ₹150 per 100 gm</li>
@@ -73,7 +73,7 @@ export default function Page() {
               <li>Effective sellable: 7 × 100 gm + 12 × 25 gm = 19 units</li>
             </ul>
           </div>
-          <div className="border border-black p-4">
+          <div className="surface surface-hover p-5">
             <div className="text-[10px] uppercase tracking-widest mb-2">Premium Milk Range - 1 kg batch</div>
             <ul className="list-disc pl-5">
               <li>Batch cost: ₹2,500 → ₹250 per 100 gm</li>
